@@ -23,7 +23,10 @@
     ////////////////////////////////////////////////////     _//////////_  // 네이버
 -(void)oauth20Connection:(NaverThirdPartyLoginConnection *)oauthConnection didFailWithError:(NSError *)error {
     NSLog(@"\n\n\n  Nearo oauth20Connection \n\n\n");
-    naverTokenSend = nil;
+    if (naverTokenSend != nil) {
+        naverTokenSend(@[error, [NSNull null]]);
+        naverTokenSend = nil;
+    }
 }
     
 -(void)oauth20ConnectionDidFinishRequestACTokenWithAuthCode {
@@ -60,6 +63,10 @@
     
 -(void)oauth20ConnectionDidFinishDeleteToken {
     NSLog(@" \n\n\n Nearo oauth20ConnectionDidFinishDeleteToken \n\n\n");
+    if (naverTokenSend != nil) {
+        naverTokenSend(@[[NSNull null], [NSNull null]]);
+        naverTokenSend = nil;
+    }
 }
     
     ////////////////////////////////////////////////////     _//////////_//      EXPORT_MODULE
